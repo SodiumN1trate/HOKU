@@ -34,8 +34,7 @@ function close_all_drop_downs() {
 
 
 // Title managment
-let titles = [];
-
+let titles = JSON.parse(localStorage.getItem("titles")) || [];
 render();
 
 function render(){
@@ -46,6 +45,7 @@ function render(){
     expenses_titles.innerHTML = "";
     didnt_buy_it.innerHTML = "";
     for (let index = 0; index < titles.length; index++) {
+        console.log(index);
         let title = `<div class="drop-down-title">
                         <span class="drop-down-title-name">${ titles[index].title_name }</span>
                         <span class="drop-down-title-price">${ titles[index].title_price }€</span>
@@ -63,7 +63,7 @@ function render(){
     };
 
     let input = `<div class="drop-down-title-input">
-        <input class="drop-down-title-name-input" placeholder="Nosaukums">
+        <input class="drop-down-title-name-input" placeholder="Nosaukums"  maxlength="20">
         <input class="drop-down-title-price-input" placeholder="Summa" maxlength="8">
         <img src="static/vectors/plus.svg" width="25px">
     </div>`;
@@ -83,8 +83,12 @@ function render_inputs(){
             if(title_name == "" || title_price == ""){
                 alert("Aizpildiet visus laukus!");
             }
+            else if(title_name.length > 20 || title_price.length > 8){
+                alert("Notikusi kļūda!");
+            }
             else{
                 titles.push({"title_name": title_name, "title_price": title_price, "title_category":e.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[3].innerHTML});
+                localStorage.setItem("titles", JSON.stringify(titles));
                 render();
             };
         });   
