@@ -35,6 +35,7 @@ function close_all_drop_downs() {
 
 // Title managment
 let titles = JSON.parse(localStorage.getItem("titles")) || [];
+
 render();
 
 function render(){
@@ -45,20 +46,19 @@ function render(){
     expenses_titles.innerHTML = "";
     didnt_buy_it.innerHTML = "";
     for (let index = 0; index < titles.length; index++) {
-        console.log(index);
         let title = `<div class="drop-down-title">
                         <span class="drop-down-title-name">${ titles[index].title_name }</span>
                         <span class="drop-down-title-price">${ titles[index].title_price }€</span>
                     </div>
             `;
         if(titles[index].title_category == "Ienākumi"){
-            income_titles.innerHTML = title;
+            income_titles.innerHTML += title;
         };
         if(titles[index].title_category == "Izdevumi"){
-            expenses_titles.innerHTML = title;
+            expenses_titles.innerHTML += title;
         };
         if(titles[index].title_category == "Nenopirku"){
-            didnt_buy_it.innerHTML = title;
+            didnt_buy_it.innerHTML += title;
         };
     };
 
@@ -71,6 +71,7 @@ function render(){
     expenses_titles.innerHTML += input;
     didnt_buy_it.innerHTML += input;
 
+    render_balance();
     render_inputs();
 };
 
@@ -92,5 +93,19 @@ function render_inputs(){
                 render();
             };
         });   
-    }
+    };
+};
+
+function render_balance(){
+    let balance = 0;
+    for (let index = 0; index < titles.length; index++) {
+        if(titles[index].title_category == "Ienākumi"){
+            balance += parseInt(titles[index].title_price);
+            console.log(balance);
+        };
+        if(titles[index].title_category == "Izdevumi"){
+            balance -= parseInt(titles[index].title_price);
+        };
+    };
+    document.getElementById("balance").innerHTML = balance;
 };
