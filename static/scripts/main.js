@@ -47,8 +47,10 @@ function render(){
     didnt_buy_it.innerHTML = "";
     for (let index = 0; index < titles.length; index++) {
         let title = `<div class="drop-down-title">
+                        <span style="display: none;">${ titles[index].id }</span>
                         <span class="drop-down-title-name">${ titles[index].title_name }</span>
                         <span class="drop-down-title-price">${ titles[index].title_price }€</span>
+                        <span class="delete-title-button">Dzēst</span>
                     </div>
             `;
         if(titles[index].title_category == "Ienākumi"){
@@ -73,6 +75,7 @@ function render(){
 
     render_balance();
     render_inputs();
+    render_delete_buttons();
 };
 
 
@@ -88,7 +91,7 @@ function render_inputs(){
                 alert("Notikusi kļūda!");
             }
             else{
-                titles.push({"title_name": title_name, "title_price": title_price, "title_category":e.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[3].innerHTML});
+                titles.push({"id": index, "title_name": title_name, "title_price": title_price, "title_category":e.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[3].innerHTML});
                 localStorage.setItem("titles", JSON.stringify(titles));
                 render();
             };
@@ -108,4 +111,17 @@ function render_balance(){
         };
     };
     document.getElementById("balance").innerHTML = balance;
+};
+
+function render_delete_buttons() {
+    for(let index = 0; index < document.querySelectorAll(".delete-title-button").length; index++) {
+        document.querySelectorAll(".delete-title-button")[index].addEventListener("click", (e)=>{
+            console.log(e.target.parentNode.childNodes[1].innerHTML);
+            titles = titles.splice(e.target.parentNode.childNodes[1].innerHTML, 1);
+            console.log(titles);
+            localStorage.setItem("titles", JSON.stringify(titles));
+            e.target.parentNode.remove();
+            render();
+        });
+    };
 };
