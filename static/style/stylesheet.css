@@ -55,8 +55,6 @@ body{
     border-radius: 8px;
     box-shadow: 1px 2px 5px black;
     background-color: #aee1e1;
-    animation-name: scale-down;
-    animation-duration: 2s;
 }
 
 .title:hover{
@@ -125,11 +123,15 @@ body{
     font-size: 15px;
 }
 
+#footer-content > button:hover {
+    cursor: pointer;
+}
+
 .drop-down-didnt-buy-it, .drop-down-expenses, .drop-down-income{
     display: none;
 }
 
-.drop-down-title, .drop-down-title-input {
+.drop-down-title, .drop-down-title-input{
     display: flex;
     justify-content: space-between;
     font-size: 24px;
@@ -143,6 +145,22 @@ body{
     border-radius: 8px;
     box-shadow: 1px 2px 5px black;
     background-color: #44cbcb;
+    animation-name: show-up;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes show-up {
+    from{
+        position: relative;
+        opacity: 0;
+        top: -35px;
+    }
+    to{
+        opacity: 1;
+        top: 0px;
+        position: relative;
+    }
 }
 
 .drop-down-title:first-child {
@@ -178,11 +196,28 @@ body{
     width: 30%;
 }
 
-.drop-down-title-input > img{
+.drop-down-title-input > img, .delete-title-button > img{
     margin-top: 3%;
     vertical-align: middle;
     cursor: pointer;
 }
+
+
+.delete-title-button > img{
+    margin-bottom: 10%;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.title-sum{
+    float: right;
+    margin-right: 4%;
+}
+
+.sum{
+    font-size: 25px;
+}
+
 
 @media only screen and (max-width: 600px) {
     body{
