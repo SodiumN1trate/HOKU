@@ -1,3 +1,4 @@
+"use strict"
 console.log("Js working");
 
 // Drop down managment
@@ -131,9 +132,9 @@ function render_delete_buttons() {
 };
 
 function title_sum_render() {
-    income_sum = 0;
-    expenses_sum = 0;
-    didnt_buy_it_sum = 0;
+    let income_sum = 0;
+    let expenses_sum = 0;
+    let didnt_buy_it_sum = 0;
     console.log(document.querySelectorAll(".sum")[0]);
     for (let index = 0; index < titles.length; index++) {
         if(titles[index].title_category == "Ienākumi"){
@@ -153,6 +154,32 @@ function title_sum_render() {
 
 
 // Help button
+const FOOTER = document.getElementById('footer');
+const TITLES = document.querySelectorAll('.title');
+const INSTRUCTION = document.getElementById('instructions');
+
 document.querySelector("#footer-content > button").addEventListener("click", (e) =>{
-    alert("Poga rabotaet");
+    FOOTER.style.display = "none";
+    TITLES.forEach(element => {
+        element.style.display = "none";
+    });
+    close_all_titles();
+    INSTRUCTION.style.display = "block";
 });
+
+document.querySelector("#instruction-close-button").addEventListener("click", (e) => {
+    FOOTER.style.display = "block";
+    TITLES.forEach(element => {
+        element.style.display = "block";
+    });
+    close_all_titles();
+    INSTRUCTION.style.display = "none";
+});
+
+// Function which closes all opened titles
+function close_all_titles() {
+    const TITLE_DROPDOWN = [document.querySelector(".drop-down-income"), document.querySelector(".drop-down-expenses"), document.querySelector(".drop-down-didnt-buy-it")];
+    TITLE_DROPDOWN.forEach(element =>{
+        element.style.display = "none";
+    });
+}
