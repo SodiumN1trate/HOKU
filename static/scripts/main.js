@@ -58,7 +58,14 @@ function render_inputs(){
                 alert("Notikusi kļūda!");
             }
             else{
-                titles.push({"id": id, "title_name": title_name, "title_price": parseInt(title_price), "title_category":e.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[3].innerHTML});
+                let price = title_price.split("");
+                let coma_pos = price.indexOf(',');
+                if(coma_pos != -1){ // If is used coma, not dot
+                    price[coma_pos] = ".";
+                }
+                console.log(price.join(""));
+                console.log("Komats", coma_pos);
+                titles.push({"id": id, "title_name": title_name, "title_price": parseFloat(price.join("")), "title_category":e.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[3].innerHTML});
                 localStorage.setItem("titles", JSON.stringify(titles));
                 id += 1;
                 render();
@@ -139,7 +146,7 @@ function delete_all_titles() {
 /* MAIN LOGIC */
 
 // Title managment
-let titles = JSON.parse(localStorage.getItem("titles")) || []; // Get all registred titles
+let titles = JSON.parse(localStorage.getItem("titles")) || [];
 let id = 0; // Global variable of titles id's
 render(); // Renders all titles
 
